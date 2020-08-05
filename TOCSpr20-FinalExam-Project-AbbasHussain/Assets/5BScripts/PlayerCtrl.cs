@@ -38,7 +38,7 @@ public class PlayerCtrl : MonoBehaviour
         {
 
             
-            if (CheckForBalancedBracketing(accessString) == true)
+            if (CheckForBalancedParen(accessString) == true)
             {
                 other.gameObject.SetActive(false);
                 count = count + 1;
@@ -46,7 +46,7 @@ public class PlayerCtrl : MonoBehaviour
                
 
             }
-            else if (CheckForBalancedBracketing(accessString) == false)
+            else if (CheckForBalancedParen(accessString) == false)
             {
                 audios.Play();
             }
@@ -58,30 +58,30 @@ public class PlayerCtrl : MonoBehaviour
 
 
 
-    static public bool CheckForBalancedBracketing(string accessString)
+    static public bool CheckForBalancedParen(string accessString)
     {
         
-        const char LeftParenthesis = '(';
-        const char RightParenthesis = ')';
-        uint BracketCount = 0;
+        const char LeftParent = '(';
+        const char RightParenth = ')';
+        uint ParenthCount = 0;
 
         try
         {
-            checked  // Turns on overflow checking.
+            checked  
             {
-                for (int Index = 0; Index < accessString.Length; Index++)
+                for (int j = 0; j < accessString.Length; j++)
                 {
-                    switch (accessString[Index])
+                    switch (accessString[j])
                     {
-                        case LeftParenthesis:
-                            BracketCount++;
+                        case LeftParent:
+                            ParenthCount++;
                             continue;
-                        case RightParenthesis:
-                            BracketCount--;
+                        case RightParenth:
+                            ParenthCount--;
                             continue;
                         default:
                             continue;
-                    }  // end of switch()
+                    } 
 
                 }
             }
@@ -92,14 +92,14 @@ public class PlayerCtrl : MonoBehaviour
             return false;
         }
 
-        if (BracketCount == 0)
+        if (ParenthCount == 0)
         {
             return true;
         }
 
         return false;
 
-    }  // end of CheckForBalancedBracketing()
+    }  
 
 
 

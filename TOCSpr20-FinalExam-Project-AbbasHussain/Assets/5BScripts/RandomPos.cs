@@ -13,8 +13,7 @@ public class RandomPos : MonoBehaviour
     static public System.Random ran = new System.Random();
     public static Random random = new Random();
     private static System.Random newrandom = new System.Random();
-
-
+    [System.Obsolete]
     void Start()
     {
         collecttible = GameObject.FindGameObjectWithTag("Pick Up");
@@ -29,7 +28,7 @@ public class RandomPos : MonoBehaviour
              balanced = RandomString(ran.Next(9, 15));
              if (IsBalanced(balanced))
              {
-                // validandnotvalids[i] = randomstring;
+                
                  position = new Vector3(Random.Range(-90, 120f), 8f, Random.Range(36, 140));
                 GameObject newobject;
                 newobject =Instantiate(collecttible, position, Quaternion.identity);
@@ -45,7 +44,7 @@ public class RandomPos : MonoBehaviour
             notbalanced = RandomString(ran.Next(9, 15));
             if (!IsBalanced(notbalanced))
             {
-                // validandnotvalids[i] = randomstring;
+             
                 position = new Vector3(Random.Range(-80, 96f), 5f, Random.Range(36, 120));
                 GameObject newobject;
                 newobject = Instantiate(collecttible, position, Quaternion.identity);
@@ -58,7 +57,7 @@ public class RandomPos : MonoBehaviour
     }
 
 
-    // Update is called once per frame
+    
     void Update()
     {
         
@@ -70,7 +69,7 @@ public class RandomPos : MonoBehaviour
           .Select(s => s[newrandom.Next(s.Length)]).ToArray());
     }
 
-    public static bool IsBalanced(string input)
+    public static bool IsBalanced(string inputStr)
     {
         Dictionary<char, char> bracketPairs = new Dictionary<char, char>() {
             { '(', ')' }
@@ -81,42 +80,40 @@ public class RandomPos : MonoBehaviour
 
         try
         {
-            // Iterate through each character in the input string
-            foreach (char c in input)
+            
+            foreach (char k in inputStr)
             {
-                // check if the character is one of the 'opening' brackets
-                if (bracketPairs.Keys.Contains(c))
+               
+                if (bracketPairs.Keys.Contains(k))
                 {
-                    // if yes, push to stack
-                    brackets.Push(c);
+                    
+                    brackets.Push(k);
                 }
                 else
-                    // check if the character is one of the 'closing' brackets
-                    if (bracketPairs.Values.Contains(c))
+                    
+                    if (bracketPairs.Values.Contains(k))
                 {
-                    // check if the closing bracket matches the 'latest' 'opening' bracket
-                    if (c == bracketPairs[brackets.First()])
+                    
+                    if (k == bracketPairs[brackets.First()])
                     {
                         brackets.Pop();
                     }
                     else
-                        // if not, its an unbalanced string
+                        
                         return false;
                 }
                 else
-                    // continue looking
+                    
                     continue;
             }
         }
         catch
         {
-            // an exception will be caught in case a closing bracket is found, 
-            // before any opening bracket.
-            // that implies, the string is not balanced. Return false
+           
             return false;
         }
 
-        // Ensure all brackets are closed
+        
         return brackets.Count() == 0 ? true : false;
     }
 }
